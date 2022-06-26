@@ -14,7 +14,7 @@ git clone https://github.com/JeffersonLab/JANA2 --branch ${JANA_VERSION} ${JANA_
 
 mkdir build                                   # Set build dir
 cd build
-cmake3 ${JANA_HOME}                           # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
+cmake ${JANA_HOME}                           # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
 make -j8 install                              # Build (using 8 threads) and install
 
 source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
@@ -24,17 +24,31 @@ source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
 ~~~ bash
 git clone https://github.com/faustus123/EIC_JANA_Example
 cd EIC_JANA_Example
-mkdir -p */build
-for d in */build ; do
-  cmake3 ..
-  make -j8 install
-done
+mkdir -p EICRawData/build ExampleDD4HepService/build EndCap/build
 
-jana -PPLUGINS=EICRawData,EndCap,ExampleDD4HepService,janacontrol dummy
+cd EICRawData/build
+cmake ..
+make -j8 install
+
+cd ../../ExampleDD4HepService/build
+cmake ..
+make -j8 install
+
+cd ../../EndCap/build
+cmake ..
+make -j8 install
+
+jana -PPLUGINS=EICRawData,EndCap,ExampleDD4HepService dummy
 ~~~
+Type `Ctl-c` to stop the program.
 
-If you built JANA2 with ZeroMQ support then, in another terminal do this:
+If you built JANA2 with ZeroMQ support then, you can run it with the `janacontrol` plugin and
+then open the jana-control.py browser in another terminal:
 ~~~ bash
+# In terminal 1:
+jana -PPLUGINS=EICRawData,EndCap,ExampleDD4HepService,janacontrol dummy
+
+# In terminal 2:
 jana-control.py
 ~~~
 
