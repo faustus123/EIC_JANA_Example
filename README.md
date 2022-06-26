@@ -20,7 +20,7 @@ make -j8 install                              # Build (using 8 threads) and inst
 source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
 ~~~
 
-# Build example
+## Build example
 ~~~ bash
 git clone https://github.com/faustus123/EIC_JANA_Example
 cd EIC_JANA_Example
