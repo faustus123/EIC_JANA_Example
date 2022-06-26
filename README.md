@@ -53,3 +53,6 @@ jana-control.py
 ~~~
 
 Click the `Debugger` button in the lower right to get the object browser.
+
+![jana-control.py GUI](docs/jana-control.png?raw=true "jana-control.py GUI")
+![jana-control.py GUI Debugger](docs/jana-control_debugger.png?raw=true "jana-control.py GUI")
