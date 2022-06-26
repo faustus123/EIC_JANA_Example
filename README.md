@@ -20,7 +20,7 @@ make -j8 install                              # Build (using 8 threads) and inst
 source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
 ~~~
 
-# Build example
+## Build example
 ~~~ bash
 git clone https://github.com/faustus123/EIC_JANA_Example
 cd EIC_JANA_Example
@@ -53,3 +53,6 @@ jana-control.py
 ~~~
 
 Click the `Debugger` button in the lower right to get the object browser.
+
+![jana-control.py GUI](docs/jana-control.png?raw=true "jana-control.py GUI")
+![jana-control.py GUI Debugger](docs/jana-control_debugger.png?raw=true "jana-control.py GUI")
