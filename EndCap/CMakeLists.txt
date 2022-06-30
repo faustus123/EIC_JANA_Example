@@ -18,6 +18,7 @@ find_package(JANA REQUIRED)
 
 
 find_package(ROOT REQUIRED)
+add_compile_definitions(HAVE_ROOT)
 
 # According to the internet, CMake authors discourage the use
 # of GLOB for identifying source files. IMHO, this is due to
@@ -29,14 +30,36 @@ find_package(ROOT REQUIRED)
 # and managing the source file list manually the way they recommend.
 if(true)
   # Automatically determine source file list.
-  file(GLOB mysourcefiles *.cpp *.cc *.c  *.hpp *.hh *.h)
-  set( EndCap_PLUGIN_SOURCES ${mysourcefiles} )    
+  file(GLOB EndCap_PLUGIN_SOURCES *.cpp *.cc *.c  *.hpp *.hh *.h)
 else()
-  # Manually manage source file list
+  # Manually manage source file list (not used. for demonstration)
   set (EndCap_PLUGIN_SOURCES
-        EndCap.cc
-  )
+		EndCap.cc
+		EndCapProcessor.h
+		JFactory_EEndCapHit.h
+		EEndCapHit.h
+		EndCapProcessor.cc
+		JFactory_EEndCapHit.cc
+	)
 endif()
+
+# NOTE: The EICRawData plugin EEndCapDigiHit class inherits from TObject.
+# Thus, we need to generate a dictionary here for it to avoid linking
+# errors due to the typeid. There may be a better way to handle this
+# so we don't have to know which objects are TObject based.
+
+# ROOT TObject dictionaries are not strictly required unless you
+# want to use any of the inspection tools with JANA.
+# See $JANA_HOME/src/plugins/JTestRoot/CMakeLists.txt for details.
+set(my_pcms)
+set( TOBJECT_CLASSES  EEndCapDigiHit) # List of TObject based classes to create dictionaries for
+include_directories(${JANA_INCLUDE_DIR}/EICRawData) # Tell cling where to find EEndCapDigiHit.h
+foreach( CLASS ${TOBJECT_CLASSES})
+	ROOT_GENERATE_DICTIONARY(G__${CLASS} ${CLASS}.h)
+	list(APPEND my_pcms ${CMAKE_CURRENT_BINARY_DIR}/lib${CLASS}_rdict.pcm )
+	list(APPEND EndCap_PLUGIN_SOURCES G__${CLASS}.cxx )
+endforeach()
+
 
 add_library(EndCap_plugin SHARED ${EndCap_PLUGIN_SOURCES})
 
@@ -50,6 +73,6 @@ file(GLOB my_headers "*.h*")
 install(FILES ${my_headers} DESTINATION include/EndCap)
 
 # For root dictionaries
-file(GLOB my_pcms "${CMAKE_CURRENT_BINARY_DIR}/*.pcm")
+message(STATUS "Installing ROOT PCM files: ${my_pcms}")
 install(FILES ${my_pcms} DESTINATION plugins)
 

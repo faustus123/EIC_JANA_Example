@@ -91,7 +91,7 @@ void JFactory_EEndCapDigiHit::Process(const std::shared_ptr<const JEvent> &event
         auto pixel = asic_hit->chan&(0x0F); // faking translation table.
 
         auto endcapdigihit = new EEndCapDigiHit(layer, chip, pixel, asic_hit->t);
-        endcapdigihit->AddAssociatedObject( asic_hit ); // optional: Record object(s) this came from 
+        //endcapdigihit->AddAssociatedObject( asic_hit ); // optional: Record object(s) this came from -- disabled for TObject
         endcapdigihits.push_back( endcapdigihit );
     }
     

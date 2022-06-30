@@ -18,6 +18,7 @@ find_package(JANA REQUIRED)
 
 
 find_package(ROOT REQUIRED)
+add_compile_definitions(HAVE_ROOT)
 
 # According to the internet, CMake authors discourage the use
 # of GLOB for identifying source files. IMHO, this is due to
@@ -29,14 +30,31 @@ find_package(ROOT REQUIRED)
 # and managing the source file list manually the way they recommend.
 if(true)
   # Automatically determine source file list.
-  file(GLOB mysourcefiles *.cpp *.cc *.c  *.hpp *.hh *.h)
-  set( EICRawData_PLUGIN_SOURCES ${mysourcefiles} )    
+  file(GLOB EICRawData_PLUGIN_SOURCES *.cpp *.cc *.c  *.hpp *.hh *.h)
 else()
-  # Manually manage source file list
+  # Manually manage source file list (not used. for demonstration)
   set (EICRawData_PLUGIN_SOURCES
-        EICRawData.cc
+		EASIC_hit.h
+		EICRawData.cc
+		ERawDataSource.h
+		JFactory_EEndCapDigiHit.h
+		EEndCapDigiHit.h
+		ERawDataSource.cc
+		JFactory_EEndCapDigiHit.cc
   )
 endif()
+
+# ROOT TObject dictionaries are not strictly required unless you
+# want to use features of the inspection tools with JANA.
+# (See $JANA_HOME/src/plugins/JTestRoot/CMakeLists.txt for details.)
+set(my_pcms)
+set( TOBJECT_CLASSES EEndCapDigiHit ) # List of TObject based classes to create dictionaries for
+foreach( CLASS ${TOBJECT_CLASSES} )
+	ROOT_GENERATE_DICTIONARY(G__${CLASS} ${CLASS}.h)
+	list(APPEND my_pcms ${CMAKE_CURRENT_BINARY_DIR}/lib${CLASS}_rdict.pcm )
+	list(APPEND EICRawData_PLUGIN_SOURCES G__${CLASS}.cxx )
+endforeach()
+
 
 add_library(EICRawData_plugin SHARED ${EICRawData_PLUGIN_SOURCES})
 
@@ -50,6 +68,6 @@ file(GLOB my_headers "*.h*")
 install(FILES ${my_headers} DESTINATION include/EICRawData)
 
 # For root dictionaries
-file(GLOB my_pcms "${CMAKE_CURRENT_BINARY_DIR}/*.pcm")
+message(STATUS "Installing ROOT PCM files: ${my_pcms}")
 install(FILES ${my_pcms} DESTINATION plugins)
 
