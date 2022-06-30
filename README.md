@@ -16,7 +16,7 @@ git clone https://github.com/JeffersonLab/JANA2 --branch ${JANA_VERSION} ${JANA_
 
 mkdir build                                   # Set build dir
 cd build
-cmake ${JANA_HOME}                           # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
+cmake ${JANA_HOME} -DUSE_ROOT=1               # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
 make -j8 install                              # Build (using 8 threads) and install
 
 source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
@@ -24,7 +24,7 @@ source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
 
 ## Build example
 ~~~ bash
-git clone https://github.com/faustus123/EIC_JANA_Example
+git clone https://github.com/faustus123/EIC_JANA_Example -b TObject_example
 cd EIC_JANA_Example
 mkdir -p EICRawData/build ExampleDD4HepService/build EndCap/build
 
