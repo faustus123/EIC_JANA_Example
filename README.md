@@ -23,6 +23,8 @@ source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
 ~~~
 
 ## Build example
+In this branch the EEndCapDigiHit class inherits from TObject instead of JObject.
+Both the EASIC_hit and EEndCapHit class inherit from JObject.
 ~~~ bash
 git clone https://github.com/faustus123/EIC_JANA_Example -b TObject_example
 cd EIC_JANA_Example
