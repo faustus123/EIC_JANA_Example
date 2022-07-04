@@ -34,6 +34,9 @@ JEventSourcePODIO::JEventSourcePODIO(std::string resource_name, JApplication* ap
 void JEventSourcePODIO::Open() {
 
     // Open is called exactly once when processing begins.
+	
+	// Allow user to specify to recycle events forever
+	GetApplication()->SetDefaultParameter("PODIO:RUN_FOREVER", run_forever, "set to true to recycle through events continuously");
 
 	// Have PODIO reader open file and get the number of events from it.
     std::string filename = GetResourceName();
@@ -54,12 +57,14 @@ void JEventSourcePODIO::GetEvent(std::shared_ptr <JEvent> event) {
     /// Calls to GetEvent are synchronized with each other, which means they can
     /// read and write state on the JEventSource without causing race conditions.
     
-	/// If you are reading a file of events and have reached the end, terminate the stream like this:
-	// // Close file pointer!
+	// Check if we have exhausted events from file
 	if( Nevents_read >= Nevents_in_file ) {
-		Nevents_read = 0;
-		//reader.closeFile();
-		//throw RETURN_STATUS::kNO_MORE_EVENTS;
+		if( run_forever ){
+			Nevents_read = 0;
+		}else{
+			reader.closeFile();
+			throw RETURN_STATUS::kNO_MORE_EVENTS;
+		}
 	}
 	
 	// This tells PODIO to free up the memory/caches used for the

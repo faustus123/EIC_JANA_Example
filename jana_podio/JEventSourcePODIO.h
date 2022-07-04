@@ -33,6 +33,7 @@ protected:
 	podio::EventStore store;
 	size_t Nevents_in_file = 0;
 	size_t Nevents_read = 0;
+	bool run_forever=false;
 
 	template <class T, class C>
 	void GetPODIOData( const char *name, std::shared_ptr <JEvent> &event );
