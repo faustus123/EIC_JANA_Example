@@ -25,10 +25,6 @@ void MyProcessor::Process(const std::shared_ptr<const JEvent> &event) {
     
 	// Get pointers to the ExampleCluster objects created by PODIO event source
 	auto clusters = event->Get<ExampleCluster>();
-
-    /// Lock mutex (mostly only needed for interacting with ROOT files
-    //std::lock_guard<std::mutex>lock(m_mutex);
-
 }
 
 void MyProcessor::Finish() {
