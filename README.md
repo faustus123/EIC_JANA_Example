@@ -1,7 +1,11 @@
 # Example of JANA2 and Geometry Service 
 This is an example written in response for a request to demonstrate how the JANA2 framework would implement DD4hep geometry to select endcap tracker hits greater than a certain radius. 
 
-The example is in the form of 3 plugins that can be used with the simple `jana` exectuable provided with JANA2. The plugins implement an event source, two levels of factories, an event processor, and a geometry service. Some extensive comments are in the code and you are encouraged to look there for details. Here is a diagram showing how the parts are connected conceptually.
+Note that there are two other examples placed into separate branches on this repository:<br>
+[Example of tracker radial cut with TObject](https://github.com/faustus123/EIC_JANA_Example/tree/TObject_example)<br>
+[Example of using PODIO as event source](https://github.com/faustus123/EIC_JANA_Example/tree/PODIO_example)<br>
+
+This example is in the form of 3 plugins that can be used with the simple `jana` exectuable provided with JANA2. The plugins implement an event source, two levels of factories, an event processor, and a geometry service. Some extensive comments are in the code and you are encouraged to look there for details. Here is a diagram showing how the parts are connected conceptually.
 
 ![Conceptual diagram](docs/diagram.png?raw=true "Conceptual Diagram of Example")
 
