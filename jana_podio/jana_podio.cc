@@ -9,7 +9,7 @@ extern "C" {
     void InitPlugin(JApplication *app) {
         InitJANAPlugin(app);
         app->Add(new JEventSourceGeneratorT<JEventSourcePODIO>());
-		app->Add(new MyProcessor());
+        app->Add(new MyProcessor());
     }
 }
     
