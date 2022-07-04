@@ -1,4 +1,4 @@
-# Example of JANA2 and Geometry Service 
+# Example of JANA2 and Geometry Service With TObject and JObjects mixed
 This is an example written in response for a request to demonstrate how the JANA2 framework would implement DD4hep geometry to select endcap tracker hits greater than a certain radius. 
 
 Note that there are two other examples placed into separate branches on this repository:<br>
