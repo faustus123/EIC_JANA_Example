@@ -47,7 +47,7 @@ git clone https://github.com/JeffersonLab/JANA2 --branch ${JANA_VERSION} ${JANA_
 
 mkdir build                                   # Set build dir
 cd build
-cmake ${JANA_HOME} -DUSE_ROOT=1               # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
+cmake -DCMAKE_CXX_STANDARD=17 -DUSE_ROOT=1 ${JANA_HOME} # Generate makefiles (add -DUSE_ZEROMQ=1 if you have ZeroMQ available) 
 make -j8 install                              # Build (using 8 threads) and install
 
 source ${JANA_HOME}/bin/jana-this.sh          # Set PATH (and other envars)
